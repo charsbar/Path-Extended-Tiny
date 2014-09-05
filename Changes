@@ -1,4 +1,7 @@
 Revision history for Path-Extended-Tiny
 
+0.02 2014/09/05
+  - subsumes requires Path::Tiny 0.048
+
 0.01 2014/09/03
   - initial release
