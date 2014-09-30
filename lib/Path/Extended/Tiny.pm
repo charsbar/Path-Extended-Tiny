@@ -22,7 +22,20 @@ use overload
 sub new { shift; _new(@_) }
 
 sub _new {
-  my $path = ref $_[0] eq __PACKAGE__ ? shift->[0]->child(@_) : Path::Tiny::path(@_);
+  my $path;
+  if (ref $_[0] eq __PACKAGE__) {
+    $path = shift->[0];
+    if (@_) {
+      my $new = Path::Tiny::path(@_);
+      if ($new->is_absolute) {
+        $path = $new;
+      } else {
+        $path = $path->child($new);
+      }
+    }
+  } else {
+    $path = Path::Tiny::path(@_);
+  }
   bless [$path], __PACKAGE__;
 }
 
