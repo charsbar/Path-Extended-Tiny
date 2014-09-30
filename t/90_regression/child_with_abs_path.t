@@ -8,7 +8,9 @@ use Path::Extended::Tiny;
 # append everything. If their first argument is absolute, it is
 # used regardless of the original path.
 
-for my $volume ('', 'C:') {
+my @volumes = ('');
+push @volumes, 'C:' if $^O eq 'MSWin32';
+for my $volume (@volumes) {
   my $path  = dir($volume.'/foo/bar');
   my $path2 = file($volume.'/baz');
 
