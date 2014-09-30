@@ -7,7 +7,7 @@ use Path::Tiny ();
 use Scalar::Util ();
 use Exporter 5.57 qw/import/;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 our @EXPORT    = qw(file dir file_or_dir dir_or_file);
 our @EXPORT_OK = (@Path::Tiny::EXPORT, @Path::Tiny::EXPORT_OK);
