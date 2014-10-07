@@ -2,6 +2,7 @@ requires 'Encode';
 requires 'File::Copy::Recursive';
 requires 'File::Find';
 requires 'File::Path';
+requires 'IO::Handle' => '1.25'; # for better say
 requires 'Path::Tiny' => '0.048'; # for subsumes
 requires 'Text::Glob';
 
