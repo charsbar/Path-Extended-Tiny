@@ -1,5 +1,8 @@
 Revision history for Path-Extended-Tiny
 
+0.04 2014/10/07
+  - requires IO::Handle 1.25
+
 0.03 2014/09/30
   - fixed a case when an absolute path is passed to file/subdir
     (Unlike Path::Class/Path::Tiny, Path::Extended doesn't simply
