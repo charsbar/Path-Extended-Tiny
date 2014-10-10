@@ -1,5 +1,10 @@
 Revision history for Path-Extended-Tiny
 
+0.05 2014/10/10
+  - replaced recurse with the code in Path::Extended, which silenced
+    "Attempt to free unreferenced scalar" warnings with fork()
+    (this was actually an issue of File::Find it used)
+
 0.04 2014/10/07
   - requires IO::Handle 1.25
 
