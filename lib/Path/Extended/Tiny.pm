@@ -418,28 +418,37 @@ sub recurse {
   my %opts = (preorder => 1, depthfirst => 0, prune => 1, @_);
   my $callback = $opts{callback}
     or Carp::croak "Must provide a 'callback' parameter to recurse()";
-  my $parent = $self->[0]->parent;
-  require File::Find;
-  File::Find::find({
-    bydepth => $opts{depthfirst} && !$opts{preorder} ? 1 : 0,
-    no_chdir => 1,
-    wanted => sub {
-      my $path = _new($File::Find::name);
-      my $relpath = $path->relative($parent);
-      if ($opts{prune} or $opts{no_hidden}) {
-        if (ref $opts{prune} eq ref qr//) {
-          return if $relpath =~ /$opts{prune}/;
-        }
-        elsif (ref $opts{prune} eq ref sub {}) {
-          return if $opts{prune}->($path);
-        }
-        else {
-          return if $relpath =~ m{(?:^|/)\.};
-        }
-      }
-      $callback->($path);
-    },
-  }, $self->_path);
+  my @queue = ($self);
+
+  my $visit_entry;
+  my $visit_dir =
+    $opts{depthfirst} && $opts{preorder}
+    ? sub {
+      my $dir = shift;
+      $callback->($dir);
+      unshift @queue, $dir->children( prune => $opts{prune} );
+    }
+    : $opts{preorder}
+    ? sub {
+      my $dir = shift;
+      $callback->($dir);
+      push @queue, $dir->children( prune => $opts{prune} );
+    }
+    : sub {
+      my $dir = shift;
+      $visit_entry->($_) for $dir->children( prune => $opts{prune} );
+      $callback->($dir);
+    };
+
+  $visit_entry = sub {
+    my $entry = shift;
+    if ($entry->is_dir) { $visit_dir->($entry) }
+    else { $callback->($entry) }
+  };
+
+  while (@queue) {
+    $visit_entry->( shift @queue );
+  }
 }
 sub volume { $_[0]->[0]->volume }
 sub subsumes {
