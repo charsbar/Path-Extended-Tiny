@@ -1,5 +1,8 @@
 Revision history for Path-Extended-Tiny
 
+0.06 2014/12/23
+  - fixed README
+
 0.05 2014/10/10
   - replaced recurse with the code in Path::Extended, which silenced
     "Attempt to free unreferenced scalar" warnings with fork()
