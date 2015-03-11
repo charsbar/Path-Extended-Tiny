@@ -415,7 +415,12 @@ sub children {
 
 sub recurse {
   my $self = shift;
-  my %opts = (preorder => 1, depthfirst => 0, prune => 1, @_);
+  my %opts = (
+    preorder => 1,
+    depthfirst => 0,
+    prune => 1,
+    (@_ == 1 && ref $_[0] eq ref sub {}) ? (callback => $_[0]) : @_
+  );
   my $callback = $opts{callback}
     or Carp::croak "Must provide a 'callback' parameter to recurse()";
   my @queue = ($self);
