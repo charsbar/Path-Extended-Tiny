@@ -1,4 +1,5 @@
 requires 'Encode';
+requires 'Exporter' => '5.57';
 requires 'File::Copy::Recursive';
 requires 'File::Find';
 requires 'File::Path';
