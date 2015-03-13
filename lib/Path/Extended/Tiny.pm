@@ -6,6 +6,7 @@ use Carp;
 use Path::Tiny ();
 use Scalar::Util ();
 use Exporter 5.57 qw/import/;
+use IO::Handle;
 
 our $VERSION = '0.07';
 
