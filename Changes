@@ -1,5 +1,8 @@
 Revision history for Path-Extended-Tiny
 
+0.08 2015/03/13
+  - explicitly use IO::Handle
+
 0.07 2015/03/11
   - requires Exporter 5.57
   - let recurse() accept a single code reference as its argument
